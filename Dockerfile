@@ -13,9 +13,9 @@ RUN curl --silent --output '/cloud_sql_proxy' 'https://storage.googleapis.com/ew
 RUN crontab -l | { cat; echo "*/15       *       *       *       *       /var/www/html/scripts/docker/cron.sh"; } | crontab -
 
 USER wodby
-COPY scripts/composer /var/www/html/scripts/composer/
-COPY scripts/docker /var/www/html/scripts/docker/
-COPY patches /var/www/html/patches/
-COPY composer.* /var/www/html/
+COPY scripts/composer scripts/composer/
+COPY scripts/docker scripts/docker/
+COPY patches patches/
+COPY composer.* .
 RUN scripts/docker/buildscript.sh ${TARGET_ENVIRONMENT}
-COPY . /var/www/html/
+COPY . .
