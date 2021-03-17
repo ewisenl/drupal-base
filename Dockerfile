@@ -10,12 +10,12 @@ USER root
 RUN composer self-update 1.10.1
 RUN curl --silent --output '/cloud_sql_proxy' 'https://storage.googleapis.com/ewise-public-files/gke/cloud_sql_proxy' \
     && chmod ugo+x '/cloud_sql_proxy'
-COPY --chown=wodby:wodby gke/cron.sh gke/buildscript.sh /var/www/html/gke/
-RUN crontab -l | { cat; echo "*/15       *       *       *       *       /var/www/html/gke/cron.sh"; } | crontab -
+RUN crontab -l | { cat; echo "*/15       *       *       *       *       /var/www/html/scripts/docker/cron.sh"; } | crontab -
 
 USER wodby
 COPY scripts/composer /var/www/html/scripts/composer/
+COPY scripts/docker /var/www/html/scripts/docker/
 COPY patches /var/www/html/patches/
 COPY composer.* /var/www/html/
-RUN gke/buildscript.sh ${TARGET_ENVIRONMENT}
+RUN scripts/docker/buildscript.sh ${TARGET_ENVIRONMENT}
 COPY . /var/www/html/
