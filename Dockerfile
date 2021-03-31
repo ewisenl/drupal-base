@@ -16,6 +16,6 @@ USER wodby
 COPY scripts/composer scripts/composer/
 COPY scripts/docker scripts/docker/
 COPY patches patches/
-COPY composer.* .
+COPY composer.* ./
 RUN scripts/docker/buildscript.sh ${TARGET_ENVIRONMENT}
 COPY . .
